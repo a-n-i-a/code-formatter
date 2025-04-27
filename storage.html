@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Code(s)</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+    <h1 class="neon">SAVED CODE</h1>
+
+    <div class = "navigation">
+        <a th:href="@{/}">Go back to Code Formatter</a>
+    </div>
+
+    <div th:if="${entries == null || entries.empty}">
+        <h2>Storage is empty!</h2>
+    </div>
+
+    <div th:unless="${entries == null || entries.empty}">
+        <div th:each="entry : ${entries}" class="snippet-container">
+            <div class="snippet-header">
+                <h2>ID: <span th:text="${entry.id}"></span></h2>
+                <div class="dates">
+                    Created: <span th:text="${entry.getCreationDate()}"></span>
+                      Expires: <span th:text="${entry.getExpirationDate()}"></span>
+                </div>
+            </div>
+
+            <div class="code-preview">
+                <strong>Preview:</strong>
+                <pre th:text="${#strings.length(entry.formatted) > 100 ? #strings.substring(entry.formatted, 0, 100) + '...' : entry.formatted}"></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
